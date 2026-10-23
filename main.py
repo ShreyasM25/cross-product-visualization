@@ -34,7 +34,7 @@ for phase in np.linspace(0, 2 * np.pi, nframe + 1)[:nframe]:
     reactive_vector = np.cross(static_vector, dynamic_vector)
 
     vector_directions = np.vstack([static_vector, dynamic_vector, reactive_vector])
-    plotter.add_arrows(vector_origins, vector_directions
+    plotter.add_arrows(vector_origins, vector_directions)
 
     plotter.write_frame()
 
