@@ -1,20 +1,24 @@
 # Cross Product Visualization
 
-A 3D visualization of vector cross products built using Python, NumPy, and PyVista. The project demonstrates how the cross product between two vectors changes as one vector rotates in three-dimensional space.
+An interactive, camera-controlled 3D visualization of vector cross products, animated in Python using the open-source PyVista library.
+
+![Cross Product Visualization](assets/cross-product-visualization.gif)
 
 ## Overview
 
-This project visualizes three vectors:
+This project demonstrates how the cross product between two vectors changes as one vector rotates in three-dimensional space. Using PyVista, the visualization displays three vectors as interactive 3D arrows:
+
 - **Static Vector (Red):** A fixed vector pointing along the positive X-axis.
 - **Dynamic Vector (Green):** A vector that continuously rotates within the XY plane.
-- **Cross Product (Blue):** The cross product of the static and dynamic vectors, demonstrating how the resulting perpendicular vector changes as the dynamic vector rotates.
+- **Cross Product (Blue):** The cross product of the static and dynamic vectors, illustrating how the resulting perpendicular vector changes as the dynamic vector rotates.
 
-The visualization updates in real time, displaying the three vectors as 3D arrows. A text display in the upper-left corner also provides the current coordinates of each vector, rounded to two decimal places.
+The visualization updates in real time, with a text display in the upper-left corner showing the current coordinates of each vector, rounded to two decimal places.
 
 ## Features
 
 - Real-time animation of a rotating 3D vector.
-- Dynamic calculation of the cross product using NumPy.
+- Interactive camera controls for viewing the visualization from different angles.
+- Dynamic cross-product calculations using NumPy.
 - 3D arrow visualization with distinct colors for each vector.
 - Live display of vector coordinates.
 - Automatic hiding of the cross-product arrow when its magnitude approaches zero.
@@ -23,7 +27,7 @@ The visualization updates in real time, displaying the three vectors as 3D arrow
 
 - **Python:** Core programming language.
 - **NumPy:** Vector calculations, cross products, and magnitude calculations.
-- **PyVista:** 3D visualization, arrow generation, and animation.
+- **PyVista:** 3D visualization, arrow generation, camera controls, and animation.
 
 ## Installation and Setup
 
