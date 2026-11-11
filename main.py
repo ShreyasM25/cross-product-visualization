@@ -2,8 +2,22 @@ import math
 import numpy as np
 import pyvista as pv
 
+
 plotter = pv.Plotter()
 plotter.add_axes(interactive=True)
+
+
+# Vector detail display
+plotter.add_text(
+    "Static Vector: [1.00 0.00 0.00]\n"
+    "Dynamic Vector: [0.00 1.00 0.00]\n"
+    "Cross Product: [0.00 0.00 1.00]",
+    position="upper_left",
+    font_size=12,
+    color="black",
+    name="vector_details"
+)
+
 
 # Vector Initialization
 start_pos = [0.0, 0.0, 0.0]
@@ -18,6 +32,7 @@ vector_directions = [
     dynamic_vector,
     cross_vector
 ]
+
 
 # Arrow creation and plot addition
 arrows = []
@@ -60,6 +75,16 @@ def update_plot(step: int) -> None:
         new_cross_product
     ]
 
+    plotter.add_text(
+        f"Static Vector: {np.array2string(static_vector, precision=2, floatmode='fixed')}\n"
+        f"Dynamic Vector: {np.array2string(new_dynamic_vector, precision=2, floatmode='fixed')}\n"
+        f"Cross Product: {np.array2string(new_cross_product, precision=2, floatmode='fixed')}",
+        position="upper_left",
+        font_size=12,
+        color="black",
+        name="vector_details"
+    )
+
     # Updated plot arrows
     for actor, direction in zip(actors, new_vector_directions):
         magnitude = np.linalg.norm(direction)
@@ -92,7 +117,8 @@ def update_plot(step: int) -> None:
 plotter.iren.initialize()
 
 # Sets the animation and number of model updates
-# Currently set to updating the graph every 30 ms
+# Currently set to updating the graph every 30 ms, very frequent
+# 30 ms makes the animation freeze up, keeping it so the animation is smooth
 plotter.add_timer_event(
     max_steps=1000000000,
     duration=30,
