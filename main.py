@@ -3,8 +3,9 @@ import numpy as np
 import pyvista as pv
 
 plotter = pv.Plotter()
-plotter.add_axes()
+plotter.add_axes(interactive=True)
 
+# Vector Initialization
 start_pos = [0.0, 0.0, 0.0]
 angle = 0.0
 
@@ -12,11 +13,22 @@ static_vector = np.array([1.0, 0.0, 0.0])
 dynamic_vector = np.array([0.0, 1.0, 0.0])
 cross_vector = np.cross(static_vector, dynamic_vector)
 
-vector_directions = np.vstack([static_vector, dynamic_vector, cross_vector])
+vector_directions = [
+    static_vector,
+    dynamic_vector,
+    cross_vector
+]
 
+# Arrow creation and plot addition
 arrows = []
+
 for direction in vector_directions:
-    arrow = pv.Arrow(start=start_pos, direction=direction, scale="auto")
+    magnitude = np.linalg.norm(direction)
+    arrow = pv.Arrow(
+        start=start_pos,
+        direction=direction,
+        scale=magnitude
+    )
     arrows.append(arrow)
 
 actors = [
@@ -24,21 +36,67 @@ actors = [
     for arrow, color in zip(arrows, ["red", "green", "blue"])
 ]
 
-def update_plot() -> None:
+
+def update_plot(step: int) -> None:
+    # 3 degree increment
     global angle
-    global start_pos
-    angle += (1/90) * math.pi
+    angle += math.pi / 60
 
-    new_dynamic_vector = np.array([np.sin(angle), np.cos(angle), 0.0])
-    new_cross_product = np.cross(static_vector, new_dynamic_vector)
+    # Updated vector calculation
+    new_dynamic_vector = np.array([
+        np.sin(angle),
+        np.cos(angle),
+        0.0
+    ])
 
-    new_vector_directions = [static_vector, new_dynamic_vector, new_cross_product]
+    new_cross_product = np.cross(
+        static_vector,
+        new_dynamic_vector
+    )
 
-    for i in range(len(actors)):
-        arrow = pv.Arrow(start=start_pos, direction=new_vector_directions[i])
-        actors[i].mapper.dataset = arrow
+    new_vector_directions = [
+        static_vector,
+        new_dynamic_vector,
+        new_cross_product
+    ]
 
+    # Updated plot arrows
+    for actor, direction in zip(actors, new_vector_directions):
+        magnitude = np.linalg.norm(direction)
+
+        # Hiding the cross-product arrow if its vector has near-zero magnitude
+        if magnitude < 1e-8:
+            actor.SetVisibility(False)
+            continue
+
+        actor.SetVisibility(True)
+
+        arrow = pv.Arrow(
+            start=start_pos,
+            direction=direction,
+            scale=magnitude
+        )
+
+        actor.mapper.dataset = arrow
+
+    # Print the timer step to verify animation is running
+    if step % 10 == 0:
+        print("Animation step:", step)
+
+    # Render the updated scene
     plotter.render()
 
-plotter.add_timer_event(max_steps=0, duration=10, callback=lambda step: update_plot())
+
+# Initialize the render-window interactor
+# Model doesn't update without this line
+plotter.iren.initialize()
+
+# Sets the animation and number of model updates
+# Currently set to updating the graph every 30 ms
+plotter.add_timer_event(
+    max_steps=1000000000,
+    duration=30,
+    callback=update_plot
+)
+
 plotter.show()
