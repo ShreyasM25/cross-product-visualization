@@ -6,7 +6,7 @@ An interactive, camera-controlled 3D visualization of vector cross products, ani
 
 ## Overview
 
-This project demonstrates how the cross product between two vectors changes as one vector rotates in three-dimensional space. Using PyVista, the visualization displays three vectors as interactive 3D arrows:
+This project demonstrates how the cross product between two vectors changes as one vector rotates in three-dimensional space. Using PyVista, the visualization renders three vectors as interactive 3D arrows:
 
 - **Static Vector (Red):** A fixed vector pointing along the positive X-axis.
 - **Dynamic Vector (Green):** A vector that continuously rotates within the XY plane.
@@ -49,6 +49,9 @@ python main.py
 
 ```text
 cross-product-visualization/
+│
+├── assets/
+│   └── cross_product_visualization.gif
 │
 ├── main.py
 ├── requirements.txt
