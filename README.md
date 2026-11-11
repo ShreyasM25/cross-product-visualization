@@ -2,7 +2,7 @@
 
 An interactive, camera-controlled 3D visualization of vector cross products, animated in Python using the open-source PyVista library.
 
-![Cross Product Visualization](assets/cross-product-visualization.gif)
+![Cross Product Visualization](assets/cross_product_visualization.gif)
 
 ## Overview
 
